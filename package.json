@@ -1,31 +1,35 @@
 {
   "name": "ali-mns",
-  "version": "2.6.8",
+  "version": "2.6.11",
   "description": "The nodejs SDK for aliyun mns service",
   "main": "index.js",
   "dependencies": {
-    "debug": "^2.2.0",
-    "promise": "^7.0.4",
-    "request": "^2.87.0",
-    "universal-analytics": "^0.4.13",
-    "xml2js": "^0.4.13",
-    "xmlbuilder": "^3.1.0"
+    "debug": "2.6.9",
+    "promise": "8.0.1",
+    "request": "2.87.0",
+    "universal-analytics": "0.4.16",
+    "xml2js": "0.4.19",
+    "xmlbuilder": "3.1.0"
   },
   "devDependencies": {
-    "@types/node": "^7.0.22",
-    "del": "^2.2.0",
-    "git-version-json": "^1.0.5",
-    "gulp": "^3.9.1",
-    "gulp-debug": "^2.1.2",
-    "gulp-git": "^1.7.1",
-    "gulp-header": "^1.8.2",
-    "gulp-newer": "^1.1.0",
-    "gulp-replace": "^0.5.4",
-    "gulp-sourcemaps": "^1.9.1",
-    "gulp-typescript": "^3.1.7",
-    "mocha": "^3.4.2",
-    "should": "^7.1.1",
-    "typescript": "^2.3.4"
+    "@types/node": "7.0.54",
+    "del": "2.2.2",
+    "git-version-json": "1.0.6",
+    "gulp": "3.9.1",
+    "gulp-debug": "2.1.2",
+    "gulp-git": "1.15.1",
+    "gulp-header": "1.8.9",
+    "gulp-newer": "1.4.0",
+    "gulp-replace": "0.5.4",
+    "gulp-sourcemaps": "1.12.1",
+    "gulp-typescript": "3.2.4",
+    "mocha": "3.5.3",
+    "should": "7.1.1",
+    "typescript": "2.7.1"
+  },
+  "overrides": {
+    "graceful-fs": "4.2.10",
+    "lodash": "4.17.21"
   },
   "scripts": {
     "prepare": "gulp",
