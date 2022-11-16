@@ -1,11 +1,11 @@
 {
-  "name": "ali-mns",
+  "name": "alicloud-mns",
   "version": "2.6.11",
   "lockfileVersion": 2,
   "requires": true,
   "packages": {
     "": {
-      "name": "ali-mns",
+      "name": "alicloud-mns",
       "version": "2.6.11",
       "license": "MIT",
       "dependencies": {

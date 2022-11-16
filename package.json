@@ -1,5 +1,5 @@
 {
-  "name": "aliyun-mns",
+  "name": "alicloud-mns",
   "version": "2.6.11",
   "description": "The nodejs SDK for aliyun mns service",
   "main": "index.js",
