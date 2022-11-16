@@ -4,6 +4,8 @@
 
 The nodejs sdk for aliyun mns service
 
+Note: please install node16.18.0:https://nodejs.org/download/release/v16.18.0/ before to execute "npm install"
+
 [阿里云消息服务-简体中文-帮助手册](http://armclr.incars.com.cn/Links/AliMNS?lang=zh-Hans)
 
 Ali MNS service is a MQ(message queue) service provided by AliYun.
