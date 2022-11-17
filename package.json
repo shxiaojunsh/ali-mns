@@ -1,6 +1,6 @@
 {
-  "name": "alicloud-mns",
-  "version": "2.6.12",
+  "name": "ali-mns-plus",
+  "version": "2.6.18",
   "description": "The nodejs SDK for aliyun mns service",
   "main": "index.js",
   "dependencies": {
@@ -8,8 +8,7 @@
     "promise": "8.0.1",
     "request": "2.87.0",
     "universal-analytics": "0.4.16",
-    "xml2js": "0.4.19",
-    "xmlbuilder": "3.1.0"
+    "xml2js": "0.4.19"
   },
   "devDependencies": {
     "@types/node": "7.0.54",
@@ -28,8 +27,7 @@
     "typescript": "2.7.1"
   },
   "overrides": {
-    "graceful-fs": "4.2.10",
-    "lodash": "4.17.21"
+    "graceful-fs": "^4.2.10"
   },
   "scripts": {
     "prepare": "gulp",

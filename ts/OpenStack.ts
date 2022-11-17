@@ -7,8 +7,6 @@ module AliMNS{
     export class OpenStack{
         constructor(account:Account){
             this._account = account;
-            // xml builder
-            this._xmlBuilder = XmlBuilder;
             // Google Analytics
             this._ga = new GA(account.getAccountId());
             this._ga.disableGA(!account.getGA());
@@ -22,10 +20,17 @@ module AliMNS{
         // options: optional, request options
         public sendP(method:string, url:string, body?:any, headers?:any, options?:any){
             var req :any = { method:method, url:url };
-            if(body) req.body = this._xmlBuilder.create(body).toString();
+            if(body) {
+                let newBody = ''
+                Object.keys(body).forEach(key => {
+                    newBody += this.toXMLString(key, body[key]);
+                });
+                debug('sendP with body:' + newBody);
+                req.body = newBody;
+            }
 
             req.headers = this.makeHeaders(method, url, headers, req.body);
-            
+
             // combines options
             if(options){
                 for(var opt in options){
@@ -72,6 +77,37 @@ module AliMNS{
         
         public disableGA(bDisable?:boolean){
             this._ga.disableGA(bDisable);
+        }
+
+        private formatXml(params) {
+            if (typeof params === 'string') {
+                return params;
+            }
+
+            var xml = '';
+            Object.keys(params).forEach((key) => {
+                const value = params[key];
+                if (typeof value === 'object') {
+                    xml += `<${key}>${this.formatXml(value)}</${key}>`;
+                } else {
+                    xml += `<${key}>${value}</${key}>`;
+                }
+            });
+            return xml;
+        }
+
+        private toXMLString(entityType, params) {
+            var xml = '<?xml version="1.0" encoding="UTF-8"?>';
+            xml +=    `<${entityType} xmlns="http://mns.aliyuncs.com/doc/v1/">`;
+            if (Array.isArray(params)) {
+                params.forEach((item) => {
+                    xml += this.formatXml(item);
+                });
+            } else {
+                xml +=    this.formatXml(params);
+            }
+            xml +=    `</${entityType}>`;
+            return xml;
         }
 
         private makeHeaders(mothod:string, url:string, headers:any, body?:string){
@@ -142,7 +178,6 @@ module AliMNS{
         private _account:Account;
         private _patternMNS = "MNS %s:%s";
         private _patternSign = "%s\n%s\n%s\n%s\n%s%s";
-        private _xmlBuilder: any;
         private _contentType = "text/xml;charset=utf-8";
         private _version = "2015-06-06";
         private _ga: GA;

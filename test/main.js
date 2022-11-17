@@ -12,7 +12,7 @@ describe('AliMNS-main', function(){
         accountId: process.env.aliyun_accountId || "your-account-id",
         keyId: process.env.aliyun_keyId || "your-key-id",
         keySecret: process.env.aliyun_keySecret || "your-key-secret",
-        region: process.env.TRAVIS == "true" ? new AliMNS.Region(AliMNS.City.SiliconValley): new AliMNS.Region(AliMNS.City.Hangzhou),
+        region: process.env.aliyun_region ? new AliMNS.Region(process.env.aliyun_region) : (process.env.TRAVIS == "true" ? new AliMNS.Region(AliMNS.City.SiliconValley): new AliMNS.Region(AliMNS.City.Hangzhou)),
         mqName: process.env.aliyun_mqName || "dev"
     };
 

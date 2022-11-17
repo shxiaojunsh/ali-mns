@@ -13,7 +13,7 @@ module AliMNS{
                 return super.sendP(msg, priority, delaySeconds);
             }
             else{
-                var body : any = { Messages: { '#list': [] } };
+                var body : any = { Messages: [] };
                 for(var i=0;i<msg.length;i++){
                     var m : Msg = msg[i];
                     var b64 = this.utf8ToBase64(m.getMsg());
@@ -21,7 +21,7 @@ module AliMNS{
                     xMsg.Message.Priority = m.getPriority();
                     xMsg.Message.DelaySeconds = m.getDelaySeconds();
 
-                    body.Messages['#list'].push(xMsg);
+                    body.Messages.push(xMsg);
                 }
 
                 debug("POST " + this._url, body);
@@ -94,10 +94,10 @@ module AliMNS{
             }
             else{
                 debug("DELETE " + this._url, receiptHandle);
-                var body : any = { ReceiptHandles: { '#list': [] } };
+                var body : any = { ReceiptHandles: [] };
                 for(var i=0;i<receiptHandle.length;i++){
                     var r:any = { ReceiptHandle: receiptHandle[i] };
-                    body.ReceiptHandles['#list'].push(r);
+                    body.ReceiptHandles.push(r);
                 }
                 this._openStack.accumulateNextGASend("MQBatch.deleteP");
                 return this._openStack.sendP("DELETE", this._url, body);

@@ -1,0 +1,94 @@
+image: ${CI_REGISTRY}/mindsphere-mainline/starterservices/workflowcreator/infrastructure-utility/docker-registry/nodejs-build:16.0.0
+
+.runner_tags: &runner_tags
+  tags:
+    - test-runner
+
+stages:
+  - test
+  - publish
+
+.conf_dev: &conf_dev
+  variables:
+    ARTIFACTORY: $NPM_CONFIG_REGISTRY
+  only:
+    - master
+    - branches
+  except:
+    - tags
+
+.conf_release: &conf_release
+  variables:
+    ARTIFACTORY: $NPM_CONFIG_REGISTRY_RELEASE
+  only:
+    - tags
+
+.conf_npmjs: &conf_npmjs
+  variables:
+    ARTIFACTORY_DOMAIN: 'registry.npmjs.org/'
+    ARTIFACTORY: "https://${ARTIFACTORY_DOMAIN}"
+    NPM_CONFIG_FILE: .npmrc
+  only:
+    - tags
+
+.install: &install
+  - npm install --unsafe-perm
+
+test:
+  stage: test
+  <<: *runner_tags
+  <<: *conf_dev
+  allow_failure: true
+  script:
+    - *install
+    - npm run test
+
+.publish: &publish
+  - export version=$(cat package.json | grep \"version\" | awk '{print $2}' | sed 's/"//g' | sed 's/,//g' | tr -d '\r')
+  - export newversion=${CI_COMMIT_TAG:-$version-$CI_BUILD_ID}
+  - echo $newversion
+  - npm version --no-git-tag-version ${newversion} --allow-same-version
+  - cat package.json
+  - npm shrinkwrap
+  - npm pack
+  - ls
+  - export filename=$(find . -name ali-mns*.tgz -print)
+  - echo "Publishing file:${filename} to ARTIFACTORY:${ARTIFACTORY}"
+  - if [[ ! -f ${filename} ]]; then echo "Error:No such file:${filename}"; exit 1; fi
+  - |
+    if [[ -n ${NPM_CONFIG_FILE} && -f ${NPM_CONFIG_FILE} ]]; then
+      npm publish $filename --registry $ARTIFACTORY --userconfig ${NPM_CONFIG_FILE}
+    else
+      npm publish $filename --registry $ARTIFACTORY
+    fi
+
+publish-dev:
+  stage: publish
+  when: manual
+  <<: *runner_tags
+  <<: *conf_dev
+  script:
+    - *install
+    - *publish
+
+publish-release:
+  stage: publish
+  when: manual
+  <<: *runner_tags
+  <<: *conf_release
+  script:
+    - *install
+    - *publish
+
+publish-npmjs:
+  stage: publish
+  when: manual
+  <<: *runner_tags
+  <<: *conf_npmjs
+  script:
+    - *install
+    - echo "//${ARTIFACTORY_DOMAIN}:_authToken=${NPMJS_CONFIG_AUTH}" > ${NPM_CONFIG_FILE}
+    - echo "registry=${ARTIFACTORY}" >> ${NPM_CONFIG_FILE}
+    - echo "proxy=${NPMJS_HTTP_PROXY}" >> ${NPM_CONFIG_FILE}
+    - cat ${NPM_CONFIG_FILE}
+    - *publish

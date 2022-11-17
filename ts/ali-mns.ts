@@ -14,5 +14,3 @@ Request['debug'] = false;
 
 var Xml2js:any  = require("xml2js");
 Xml2js.parseStringP = Promise.denodeify(Xml2js.parseString);
-
-var XmlBuilder:any = require("xmlbuilder");

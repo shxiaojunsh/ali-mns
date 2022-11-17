@@ -1,10 +1,13 @@
-# ali-mns (ali-mqs)
+# ali-mns-plus ali-mns (ali-mqs)
 [![npm version](https://badge.fury.io/js/ali-mns.svg)](http://badge.fury.io/js/ali-mns)
 [![npm version](https://badge.fury.io/js/ali-mqs.svg)](http://badge.fury.io/js/ali-mqs)
 
-The nodejs sdk for aliyun mns service
+This is forked from https://github.com/InCar/ali-mns and changed with another name (ali-mns-plus)
+in order to publish successfully by myself
 
-Note: please install node16.18.0:https://nodejs.org/download/release/v16.18.0/ before to execute "npm install"
+NOTE: please install node16.18.0:https://nodejs.org/download/release/v16.18.0/ before to execute "npm install"
+
+The nodejs sdk for aliyun mns service
 
 [阿里云消息服务-简体中文-帮助手册](http://armclr.incars.com.cn/Links/AliMNS?lang=zh-Hans)
 

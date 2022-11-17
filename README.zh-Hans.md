@@ -2,6 +2,10 @@
 [![npm version](https://badge.fury.io/js/ali-mns.svg)](http://badge.fury.io/js/ali-mns)
 [![npm version](https://badge.fury.io/js/ali-mqs.svg)](http://badge.fury.io/js/ali-mqs)
 
+这是从https://github.com/InCar/ali-mns演进而来，并且为了能成功在npmjs发布因此更改了名字(ali-mns-plus)
+
+注意: 建议安装node16.18.0(https://nodejs.org/download/release/v16.18.0/)以便成功执行npm install
+
 阿里云消息服务(MNS)nodejs软开发包
 
 [AliYun-MNS.en-US.README](http://armclr.azurewebsites.net/Links/AliMNS?lang=en-US)
