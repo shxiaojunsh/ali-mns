@@ -1,4 +1,4 @@
-image: ${CI_REGISTRY}/mindsphere-mainline/starterservices/workflowcreator/infrastructure-utility/docker-registry/nodejs-build:16.0.0
+image: ${CI_REGISTRY}/nodejs-build:16.0.0
 
 .runner_tags: &runner_tags
   tags:
