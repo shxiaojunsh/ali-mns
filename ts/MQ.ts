@@ -75,7 +75,7 @@ module AliMNS{
                 if(waitSeconds) options.timeout += (1000 * waitSeconds);
 
                 _this._openStack.accumulateNextGASend("MQ.recvP");
-                _this._openStack.sendP("GET", url, null, null, options).done(function(data){
+                _this._openStack.sendP("GET", url, null, null, options).then(function(data){
                     debug(data);
                     if(data && data.Message && data.Message.MessageBody){
                         data.Message.MessageBody = _this.base64ToUtf8(data.Message.MessageBody)
@@ -83,7 +83,7 @@ module AliMNS{
                     resolve(data);
                 }, function(ex){
                     // for compatible with 1.x, still use literal "timeout"
-                    if(ex.code === "ETIMEDOUT"){
+                    if(ex.code === "ETIMEDOUT" || ex.code === 'ECONNABORTED'){
                         var exTimeout:any = new Error("timeout");
                         exTimeout.innerException = ex;
                         exTimeout.code = ex.code;
@@ -124,7 +124,8 @@ module AliMNS{
                 + "&VisibilityTimeout=" + reserveSeconds;
             debug("PUT " + url);
             this._openStack.accumulateNextGASend("MQ.reserveP");
-            return this._openStack.sendP("PUT", url);
+            // ChangeMessageVisibility must not set 'Content-Type' in header otherwise 400 with invalid content type comes
+            return this._openStack.sendP("PUT", url, null, null, {forceRemoveHeaders: ['Content-Type']});
         }
 
         // 消息通知.每当有消息收到时,都调用cb回调函数

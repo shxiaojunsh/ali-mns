@@ -46,13 +46,13 @@ module AliMNS{
                     if(waitSeconds) options.timeout += (1000 * waitSeconds);
 
                     self._openStack.accumulateNextGASend("MQBatch.recvP");
-                    self._openStack.sendP("GET", url, null, null, options).done(function(data){
+                    self._openStack.sendP("GET", url, null, null, options).then(function(data){
                         debug(data);
                         self.decodeB64Messages(data);
                         resolve(data);
                     }, function(ex){
                         // for compatible with 1.x, still use literal "timeout"
-                        if(ex.code === "ETIMEDOUT"){
+                        if(ex.code === "ETIMEDOUT" || ex.code === 'ECONNABORTED'){
                             var exTimeout:any = new Error("timeout");
                             exTimeout.innerException = ex;
                             exTimeout.code = ex.code;

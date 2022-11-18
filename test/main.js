@@ -114,7 +114,8 @@ describe('AliMNS-main', function(){
             .then(function(data){
                 assert.fail(data, "expect timeout");
             }, function(ex){
-                assert.equal(ex.code, "ESOCKETTIMEDOUT");
+                // axious sets ECONNABORTED as timeout of error code whereas request sets ESOCKETTIMEDOUT as that one.
+                assert.equal(ex.code, "ECONNABORTED");
             })
             .then(done, done);
         });
@@ -157,7 +158,7 @@ describe('AliMNS-main', function(){
                         }
     
                         if(notifyCount >= 3){
-                            mq.notifyStopP().done(function(){
+                            mq.notifyStopP().then(function(){
                                 if(notifyConfirmed >= 3) resolve("notifyRecv task succeed!");
                                 else reject("notifyRecv task failed!");
                             });

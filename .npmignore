@@ -6,3 +6,4 @@ gulpfile.js
 dts/
 ts/
 test/
+.gitlab-ci.yml

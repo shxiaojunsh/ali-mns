@@ -2,7 +2,7 @@
 [![npm version](https://badge.fury.io/js/ali-mns.svg)](http://badge.fury.io/js/ali-mns)
 [![npm version](https://badge.fury.io/js/ali-mqs.svg)](http://badge.fury.io/js/ali-mqs)
 
-这是从https://github.com/InCar/ali-mns演进而来，并且为了能成功在npmjs发布因此更改了名字(ali-mns-plus)
+这是从https://github.com/shxiaojunsh/ali-mns演进而来，并且为了能成功在npmjs发布因此更改了名字(ali-mns-plus)
 
 注意: 建议安装node16.18.0(https://nodejs.org/download/release/v16.18.0/)以便成功执行npm install
 
@@ -28,7 +28,7 @@
     // send message
     mq.sendP("Hello ali-mns").then(console.log, console.error);
 ```
-更多示例代码可以参考[GitHub](https://github.com/InCar/ali-mns/tree/master/test).
+更多示例代码可以参考[GitHub](https://github.com/shxiaojunsh/ali-mns/tree/master/test).
 
 # Promised
 ali-mns使用 [promise](https://www.npmjs.org/package/promise) 模式.
@@ -39,7 +39,7 @@ ali-mns使用 [promise](https://www.npmjs.org/package/promise) 模式.
 
 绝大多数源代码都用typescript写成,访问 [http://www.typescriptlang.org/](http://www.typescriptlang.org/) 获取更多typescript的知识.
 
-如果你对源代码感兴趣,访问GitHub [https://github.com/InCar/ali-mns](https://github.com/InCar/ali-mns)
+如果你对源代码感兴趣,访问GitHub [https://github.com/shxiaojunsh/ali-mns](https://github.com/shxiaojunsh/ali-mns)
 
 克隆源代后,使用`gulp`来编译.ts文件.
 
@@ -893,7 +893,7 @@ var account = new AliMNS.Account("1786090012649663", "<your-key-id>", "<your-key
 **accountId** 16位的数字.
 点击[这个链接](https://account.console.aliyun.com/#/secure)找到你的account id.
 
-在GitHub, [分支v1.x](https://github.com/InCar/ali-mns/tree/v1.x) 跟踪旧的mqs服务.
+在GitHub, [分支v1.x](https://github.com/shxiaojunsh/ali-mns/tree/v1.x) 跟踪旧的mqs服务.
 使用`npm install ali-mqs' 安装 [ali-mqs](https://www.npmjs.com/package/ali-mqs) 包的v1.x版本.
 
 # Performance - Serial vs. Batch 串行和批量的性能对比
@@ -921,8 +921,8 @@ var account = new AliMNS.Account("1786090012649663", "<your-key-id>", "<your-key
       √ #stopRecv (6044ms)
 ```
 
-测试代码位于[$/test/performance.js](https://github.com/InCar/ali-mns/blob/master/test/performance.js)
-一份测试输出日志示例位于 [$/test/performance.log](https://github.com/InCar/ali-mns/blob/master/test/performance.log)
+测试代码位于[$/test/performance.js](https://github.com/shxiaojunsh/ali-mns/blob/master/test/performance.js)
+一份测试输出日志示例位于 [$/test/performance.log](https://github.com/shxiaojunsh/ali-mns/blob/master/test/performance.log)
 
 执行`npm run test`运行测试.
 
@@ -936,7 +936,7 @@ var account = new AliMNS.Account("1786090012649663", "<your-key-id>", "<your-key
 跟踪信息只包含请求的URL.
 你的数据,密钥等等都不会被发送.
 你的帐号ID在转换为MD5后被发送,因此它不可能被用于反向跟踪回你.
-你可以检查这里的[代码](https://github.com/InCar/ali-mns/blob/master/ts/GA.ts#L28)来了解数据如何被收集.
+你可以检查这里的[代码](https://github.com/shxiaojunsh/ali-mns/blob/master/ts/GA.ts#L28)来了解数据如何被收集.
 
 你总可以按你自己的愿望完全禁用掉Google分析数据收集功能.
 ```javascript

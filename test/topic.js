@@ -13,7 +13,7 @@ describe('AliMNS-topic', ()=>{
         accountId: process.env.aliyun_accountId || "your-account-id",
         keyId: process.env.aliyun_keyId || "your-key-id",
         keySecret: process.env.aliyun_keySecret || "your-key-secret",
-        region: process.env.TRAVIS == "true" ? new AliMNS.Region(AliMNS.City.SiliconValley): new AliMNS.Region(AliMNS.City.Hangzhou),
+        region: process.env.aliyun_region ? new AliMNS.Region(process.env.aliyun_region) : (process.env.TRAVIS == "true" ? new AliMNS.Region(AliMNS.City.SiliconValley): new AliMNS.Region(AliMNS.City.Hangzhou)),
         topicName: process.env.aliyun_topicName || "dev",
         endPoint: process.env.aliyun_endPoint || "https://www.baidu.com/ali-mns-ep",
         port: process.env.aliyun_port || 80
@@ -23,8 +23,6 @@ describe('AliMNS-topic', ()=>{
     var cfgPath = Path.join(__dirname, "account.js");
     if(fs.existsSync(cfgPath)){
         aliCfg = require(cfgPath);
-        // Topic截至2016年4月时仅有深圳可用
-        aliCfg.region = "shenzhen";
     }
     var account = new AliMNS.Account(aliCfg.accountId, aliCfg.keyId, aliCfg.keySecret);
     var mns = new AliMNS.MNSTopic(account, aliCfg.region);

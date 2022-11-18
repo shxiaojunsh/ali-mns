@@ -41,18 +41,37 @@ module AliMNS{
                 }
             }
 
-            var ret = Request['requestP'](req).then((response)=>{
-                // convert the body from xml to json
+            const parseRespBody = (response) => {
                 return Xml2js.parseStringP(response.body, {explicitArray: false})
-                    .then((bodyJSON)=> {
-                        response.bodyJSON = bodyJSON;
-                        return response;
-                    }, ()=>{
-                        // cannot parse as xml
-                        response.bodyJSON = response.body;
-                        return response;
-                    });
-            }).then((response)=>{
+                .then((bodyJSON)=> {
+                    response.bodyJSON = bodyJSON;
+                    return response;
+                }, ()=>{
+                    // cannot parse as xml
+                    if (typeof response.body === 'string') {
+                        try {
+                            response.bodyJSON = JSON.parse(response.body);
+                        } catch (ex) {
+                            response.bodyJSON = response.body;
+                        }
+                    } else {
+                        response.bodyJSON = response.body
+                    }
+                    return response;
+                });
+            };
+
+            var ret = RequestP(req).then((response)=>{
+                return parseRespBody(response);
+            }, (error => {
+                return parseRespBody(error).then(resp => {
+                    resp.bodyJSON = resp.bodyJSON || {};
+                    resp.bodyJSON.code = error.code;
+                    resp.bodyJSON.statusCode = error.statusCode;
+                    return resp;
+                });
+            }))
+            .then((response)=>{
                 if(response.statusCode < 400) { // 200 okay!
                     if(response.bodyJSON) return response.bodyJSON;
                     else return response.statusCode;

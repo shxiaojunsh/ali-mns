@@ -20,16 +20,16 @@ The original Ali-MQS service has been upgraded and changed it's name to Ali-MNS 
 Go to  [Migrate](#migrate) part for the old version informations.
 
 # QuickStart
-Use 'npm install ali-mns' to install the package.
+Use 'npm install ali-mns-plus' to install the package.
 
 ```javascript
-    var AliMNS = require("ali-mns");
+    var AliMNS = require("ali-mns-plus");
     var account = new AliMNS.Account("<your-account-id>", "<your-key-id>", "<your-key-secret>");
     var mq = new AliMNS.MQ("<your-mq-name>", account, "hangzhou");
     // send message
     mq.sendP("Hello ali-mns").then(console.log, console.error);
 ```
-More sample codes can be found in [GitHub](https://github.com/InCar/ali-mns/tree/master/test).
+More sample codes can be found in [GitHub](https://github.com/shxiaojunsh/ali-mns/tree/master/test).
 
 # Promised
 The ali-mns use the [promise](https://www.npmjs.org/package/promise) pattern.
@@ -41,7 +41,7 @@ If you only want to use it, forget this.
 Most source files are written in typescript instead of javascript.
 Visit [http://www.typescriptlang.org/](http://www.typescriptlang.org/) for more information about typescript.
 
-If you interest in source file, visit GitHub [https://github.com/InCar/ali-mns](https://github.com/InCar/ali-mns)
+If you interest in source file, visit GitHub [https://github.com/shxiaojunsh/ali-mns](https://github.com/shxiaojunsh/ali-mns)
 
 Please use 'gulp' to compile ts files into a single index.js file after downloading source files. 
 
@@ -304,7 +304,7 @@ keyId: String, ali key id.
 
 keySecret: String, ali key secret.
 ```javascript
-    var AliMNS = require("ali-mns");
+    var AliMNS = require("ali-mns-plus");
     var account = new AliMNS.Account("<your-owner-id>", "<your-key-id>", "<your-key-secret>");
 ```
 The account object is usually passed as an argument for other class such as *MNS*, *MQ*
@@ -385,7 +385,7 @@ If it is string, it can be "hangzhou", "beijing" or any Chinese datacenter city 
 If it is Region, it allows you to specify data center other than in China. 
 Default is "hangzhou". It can also be internal or vpc address "hangzhou-internal", "beijing-internal" or "qingdao-internal-vpc".
 ```javascript
-    var AliMNS = require("ali-mns");
+    var AliMNS = require("ali-mns-plus");
     var account = new AliMNS.Account("<your-account-id>", "<your-key-id>", "<your-key-secret>");
     var mns = new AliMNS.MNS(account, "hangzhou");
     // or
@@ -461,7 +461,7 @@ If it is string, it can be "hangzhou", "beijing" or any Chinese datacenter city 
 If it is Region, it allows you to specify data center other than in China. 
 Default is "hangzhou". It can also be internal or vpc address "hangzhou-internal", "beijing-internal" or "qingdao-internal-vpc".
 ```javascript
-    var AliMNS = require("ali-mns");
+    var AliMNS = require("ali-mns-plus");
     var account = new AliMNS.Account("<your-account-id>", "<your-key-id>", "<your-key-secret>");
     var mq = new AliMNS.MQ(account, "hangzhou");
     // or
@@ -697,7 +697,7 @@ All other arguments are same as *mq.notifyRecv*.
 The class `MNSTopic` extends class `MNS` for providing features in topic model.
 All methods in `MNS` class are also available in `MNSTopic`.
 ```javascript
-    var AliMNS = require("ali-mns");
+    var AliMNS = require("ali-mns-plus");
     var account = new AliMNS.Account("<your-account-id>", "<your-key-id>", "<your-key-secret>");
     var mns = new AliMNS.MNSTopic(account, "shenzhen");
     // or
@@ -742,7 +742,7 @@ If it is string, it can be "hangzhou", "beijing" or any Chinese datacenter city 
 If it is Region, it allows you to specify data center other than in China. 
 Default is "hangzhou". It can also be internal or vpc address "hangzhou-internal", "beijing-internal" or "qingdao-internal-vpc".
 ```javascript
-    var AliMNS = require("ali-mns");
+    var AliMNS = require("ali-mns-plus");
     var account = new AliMNS.Account("<your-account-id>", "<your-key-id>", "<your-key-secret>");
     var topic = new AliMNS.Topic("t11", account, "shenzhen");
     // or
@@ -832,7 +832,7 @@ Set options to `{ forever: true }` will let http(s) channel *KeepAive*.
 # Subscription(name:string, topic:Topic)
 Operate a subscription.
 ```javascript
-var AliMNS = require("ali-mns");
+var AliMNS = require("ali-mns-plus");
 var account = new AliMNS.Account("<your-account-id>", "<your-key-id>", "<your-key-secret>");
 var topic = new AliMNS.Topic("t11", account, "shenzhen");
 var subscription = new AliMNS.Subscription("s12", topic);
@@ -874,27 +874,27 @@ AliMNS.Subscription.NotifyContentFormat.SIMPLIFIED : "SIMPLIFIED"
 [More about NotifyContentFormat[zh-Hans]](https://help.aliyun.com/document_detail/mns/api_reference/concepts/NotifyContentFormat.html?spm=5176.docmns/api_reference/concepts/NotifyStrategy.6.142.kWiFyy)
 
 # DEBUG Trace
-Set the environment variable **DEBUG** to "ali-mns" to enable the debug trace output.
+Set the environment variable **DEBUG** to "ali-mns-plus" to enable the debug trace output.
 ```SHELL
 # linux bash
-export DEBUG=ali-mns
+export DEBUG=ali-mns-plus
 
 # windows
-set DEBUG=ali-mns
+set DEBUG=ali-mns-plus
 ```
 
 # Migrate
-+ 1.The ali-mns is fully compatible with ali-mqs, simply replace the ali-mqs package to ali-mns.
++ 1.The ali-mns-plus is fully compatible with ali-mqs, simply replace the ali-mqs package to ali-mns-plus.
 ```javascript
 // var AliMQS = require('ali-mqs');
-var AliMQS = require('ali-mns');
+var AliMQS = require('ali-mns-plus');
 ```
 
 + 2.Optional. Change the **ownerId** to **accountId**
 Ali-Yun upgrade their account system, and recommend to use the newer account id instead of owner id.
 But the old owner id is still available for now.
 ```javascript
-var AliMQS = require("ali-mns");
+var AliMQS = require("ali-mns-plus");
 // var account = new AliMNS.Account("hl35yqoedp", "<your-key-id>", "<your-key-secret>");
 var account = new AliMNS.Account("1786090012649663", "<your-key-id>", "<your-key-secret>");
 ```
@@ -931,8 +931,8 @@ It is about **10 times slower** in serial mode than in batch mode.
       √ #stopRecv (6044ms)
 ```
 
-The testing code is in [$/test/performance.js](https://github.com/InCar/ali-mns/blob/master/test/performance.js)
-and a test log sample is in [$/test/performance.log](https://github.com/InCar/ali-mns/blob/master/test/performance.log)
+The testing code is in [$/test/performance.js](https://github.com/shxiaojunsh/ali-mns/blob/master/test/performance.js)
+and a test log sample is in [$/test/performance.log](https://github.com/shxiaojunsh/ali-mns/blob/master/test/performance.log)
 
 Use `npm run test` to execute the test.
 
@@ -945,11 +945,11 @@ By default a tracing information is sent to google analytics when sending a requ
 The tracing information contains only the url.
 Your data, key will not be sent.
 Your account id is sent by hash to md5 value, so it can not be used tracking back to you.
-You can check [code](https://github.com/InCar/ali-mns/blob/master/ts/GA.ts#L28) about data collection.
+You can check [code](https://github.com/shxiaojunsh/ali-mns/blob/master/ts/GA.ts#L28) about data collection.
 
 You can always disable data collection as you wish.
 ```javascript
-    var AliMNS = require("ali-mns");
+    var AliMNS = require("ali-mns-plus");
     var account = new AliMNS.Account("<your-account-id>", "<your-key-id>", "<your-key-secret>");
     
     // Disable google analytics data collection
