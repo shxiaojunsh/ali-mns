@@ -25,7 +25,6 @@ module AliMNS{
                 }
 
                 debug("POST " + this._url, body);
-                this._openStack.accumulateNextGASend("MQBatch.sendP");
                 return this._openStack.sendP("POST", this._url, body);
             }
         }
@@ -37,15 +36,14 @@ module AliMNS{
                 var url = this._url;
                 url += "?numOfMessages=" + numOfMessages;
                 if(waitSeconds) url += "&waitseconds=" + waitSeconds;
-                
+
                 debug("GET " + url);
-    
+
                 return new Promise(function(resolve, reject){
                     // use the timeout mechanism inside the request module
                     var options = { timeout: 1000 * self._recvTolerance };
                     if(waitSeconds) options.timeout += (1000 * waitSeconds);
 
-                    self._openStack.accumulateNextGASend("MQBatch.recvP");
                     self._openStack.sendP("GET", url, null, null, options).then(function(data){
                         debug(data);
                         self.decodeB64Messages(data);
@@ -76,7 +74,6 @@ module AliMNS{
                 var url = this._url + "?peekonly=true";
                 url += "&numOfMessages=" + numOfMessages;
                 debug("GET " + url);
-                this._openStack.accumulateNextGASend("MQBatch.peekP");
                 return this._openStack.sendP("GET", url).then(function(data){
                     debug(data);
                     self.decodeB64Messages(data);
@@ -99,20 +96,19 @@ module AliMNS{
                     var r:any = { ReceiptHandle: receiptHandle[i] };
                     body.ReceiptHandles.push(r);
                 }
-                this._openStack.accumulateNextGASend("MQBatch.deleteP");
                 return this._openStack.sendP("DELETE", this._url, body);
             }
         }
-        
+
         // 消息通知.每当有消息收到时,都调用cb回调函数
         // 如果cb返回true,那么将删除消息,否则保留消息
         public notifyRecv(cb:(ex:Error, msg:any)=>Boolean, waitSeconds?:number, numOfMessages?:number){
             // lazy create
             if(this._notifyRecv === null) this._notifyRecv = new NotifyRecv(this);
-            
+
             return this._notifyRecv.notifyRecv(cb, waitSeconds || 5, numOfMessages || 16);
         }
-        
+
         protected decodeB64Messages(data:any){
             if(data && data.Messages && data.Messages.Message){
                 if(!Util.isArray(data.Messages.Message)){
@@ -129,7 +125,7 @@ module AliMNS{
                 super.decodeB64Messages(data);
             }
         }
-        
+
         protected _notifyRecv: INotifyRecvBatch = null;
     }
 }

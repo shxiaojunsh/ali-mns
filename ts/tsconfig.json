@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "module": "system",
+        "target":"es5",
         "noImplicitAny": false,
         "removeComments": false,
         "preserveConstEnums": true,
@@ -8,7 +9,8 @@
         "sourceMap": true,
         "rootDir": "ts/",
         "declaration": true,
-        "moduleResolution": "node"
+        "moduleResolution": "node",
+        "lib": ["es2015.promise", "es5", "dom"]
     },
     "exclude": [
         "node_modules",

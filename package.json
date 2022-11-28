@@ -1,13 +1,12 @@
 {
   "name": "ali-mns-plus",
-  "version": "2.6.20",
+  "version": "2.6.21",
   "description": "The nodejs SDK for aliyun mns service",
   "main": "index.js",
   "dependencies": {
     "debug": "2.6.9",
     "promise": "8.0.1",
     "axios": "0.27.2",
-    "universal-analytics": "0.4.16",
     "xml2js": "0.4.19"
   },
   "devDependencies": {

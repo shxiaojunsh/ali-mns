@@ -7,9 +7,6 @@ module AliMNS{
     export class OpenStack{
         constructor(account:Account){
             this._account = account;
-            // Google Analytics
-            this._ga = new GA(account.getAccountId());
-            this._ga.disableGA(!account.getGA());
         }
 
         // Send the request
@@ -81,21 +78,7 @@ module AliMNS{
                     else return Promise.reject(response.statusCode);
                 }
             });
-            
-            // google analytics
-            if(this._gaRGA % 1000000 == 0)
-                this._ga.send("OpenStack.sendP", this._gaRGA, url);
-            this._gaRGA++;
-            
             return ret;
-        }
-        
-        public accumulateNextGASend(prefix:string){
-            this._ga.accumulateNextSend(prefix);
-        }
-        
-        public disableGA(bDisable?:boolean){
-            this._ga.disableGA(bDisable);
         }
 
         private formatXml(params) {
@@ -138,7 +121,7 @@ module AliMNS{
             var contentMD5 = "";
             var contentType = "";
             if(body){
-                if(!headers["Content-Length"]) headers["Content-Length"] = (new Buffer(body, 'utf-8')).length;
+                if(!headers["Content-Length"]) headers["Content-Length"] = (Buffer.from(body, 'utf-8')).length;
                 if(!headers["Content-Type"]) headers["Content-Type"] = this._contentType;
                 contentType = headers["Content-Type"];
                 contentMD5 = this._account.b64md5(body);
@@ -199,7 +182,5 @@ module AliMNS{
         private _patternSign = "%s\n%s\n%s\n%s\n%s%s";
         private _contentType = "text/xml;charset=utf-8";
         private _version = "2015-06-06";
-        private _ga: GA;
-        private _gaRGA = 0; // Reduce Google Analysis sending rate
     }
 }

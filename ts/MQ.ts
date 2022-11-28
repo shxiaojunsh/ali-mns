@@ -45,18 +45,18 @@ module AliMNS{
 
         // 发送消息
         public sendP(msg:string, priority?:number, delaySeconds?:number){
-            
+
             var b64 = this.utf8ToBase64(msg);
-            
+
             var body :any = { Message: { MessageBody: b64 } };
             if(!isNaN(priority)) body.Message.Priority = priority;
             if(!isNaN(delaySeconds)) body.Message.DelaySeconds = delaySeconds;
 
             debug("POST " + this._url, body);
-            this._openStack.accumulateNextGASend("MQ.sendP");
+
             return this._openStack.sendP("POST", this._url, body);
         }
-        
+
         // 接收消息容忍时间(秒)
         public getRecvTolerance(){ return this._recvTolerance; }
         public setRecvTolerance(value:number){ this._recvTolerance = value; }
@@ -74,7 +74,6 @@ module AliMNS{
                 var options = { timeout: 1000 * _this._recvTolerance };
                 if(waitSeconds) options.timeout += (1000 * waitSeconds);
 
-                _this._openStack.accumulateNextGASend("MQ.recvP");
                 _this._openStack.sendP("GET", url, null, null, options).then(function(data){
                     debug(data);
                     if(data && data.Message && data.Message.MessageBody){
@@ -101,7 +100,6 @@ module AliMNS{
             var _this = this;
             var url = this._url + "?peekonly=true";
             debug("GET " + url);
-            this._openStack.accumulateNextGASend("MQ.peekP");
             return this._openStack.sendP("GET", url).then(function(data){
                 debug(data);
                 _this.decodeB64Messages(data);
@@ -113,7 +111,6 @@ module AliMNS{
         public deleteP(receiptHandle:string){
             var url = this._url +  "?ReceiptHandle=" + receiptHandle;
             debug("DELETE " + url);
-            this._openStack.accumulateNextGASend("MQ.deleteP");
             return this._openStack.sendP("DELETE", url);
         }
 
@@ -123,7 +120,6 @@ module AliMNS{
                 + "?ReceiptHandle=" + receiptHandle
                 + "&VisibilityTimeout=" + reserveSeconds;
             debug("PUT " + url);
-            this._openStack.accumulateNextGASend("MQ.reserveP");
             // ChangeMessageVisibility must not set 'Content-Type' in header otherwise 400 with invalid content type comes
             return this._openStack.sendP("PUT", url, null, null, {forceRemoveHeaders: ['Content-Type']});
         }
@@ -144,12 +140,12 @@ module AliMNS{
         }
         
         protected utf8ToBase64(src){
-            var buf = new Buffer(src, 'utf8');
+            var buf = Buffer.from(src, 'utf8');
             return buf.toString('base64');
         }
         
         protected base64ToUtf8(src){
-            var buf = new Buffer(src, 'base64');
+            var buf = Buffer.from(src, 'base64');
             return buf.toString('utf8');
         }
         

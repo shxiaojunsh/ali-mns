@@ -8,32 +8,26 @@ module AliMNS{
 
             // emitter
             this._emitter = new Events.EventEmitter();
-            
+
             // Google Analytics
             if(mq instanceof MQ){
                 var account = mq.getAccount();
-                this._ga = new GA(account.getAccountId());
-                this._ga.disableGA(!account.getGA());
             }
         }
-        
+
         // 消息通知.每当有消息收到时,都调用cb回调函数
         // 如果cb返回true,那么将删除消息,否则保留消息
         public notifyRecv(cb:(ex:Error, msg:any)=>Boolean, waitSeconds?:number, numOfMessages?:number){
             this._signalSTOP = false;
             this._timeoutCount = 0;
             this.notifyRecvInternal(cb, waitSeconds, numOfMessages);
-            // Google Analytics
-            if(this._ga) this._ga.send("NotifyRecv.notifyRecv", 0, "");
         }
 
         // 停止消息通知
         public notifyStopP(){
             if(this._signalSTOP)
                 return Promise.resolve(this._evStopped);
-            // Google Analytics
-            if(this._ga) this._ga.send("NotifyRecv.notifyStopP", 0, "");
-            
+
             this._signalSTOP = true;
             return new Promise((resolve)=>{
                 this._emitter.once(this._evStopped, ()=>{
@@ -104,7 +98,7 @@ module AliMNS{
                 }, 5000);
             }
         }
-        
+
         private deleteP(dataRecv:any){
             if(dataRecv){
                 if(dataRecv.Message){
@@ -126,13 +120,13 @@ module AliMNS{
                 return Promise.resolve(dataRecv);
             }
         }
-        
+
         private _mq: IMQ;
         private _signalSTOP = true;
-        
+
         private _evStopped = "AliMNS_MQ_NOTIFY_STOPPED";
         private _emitter:any;
-        
+
         // 连续timeout计数器
         // 在某种未知的原因下,网络底层链接断了
         // 这时在程序内部的重试无法促使网络重连,以后的重试都是徒劳的
@@ -140,7 +134,5 @@ module AliMNS{
         // 这时抛出NetworkBroken异常
         private _timeoutCount = 0;
         private _timeoutMax = 128;
-        
-        private _ga:GA = null;
     }
 }

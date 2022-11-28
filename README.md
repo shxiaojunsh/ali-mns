@@ -1,9 +1,8 @@
 # ali-mns-plus ali-mns (ali-mqs)
-[![npm version](https://badge.fury.io/js/ali-mns.svg)](http://badge.fury.io/js/ali-mns)
-[![npm version](https://badge.fury.io/js/ali-mqs.svg)](http://badge.fury.io/js/ali-mqs)
+[![npm version](https://badge.fury.io/js/ali-mns-plus.svg)](http://badge.fury.io/js/ali-mns-plus)
 
 This is forked from https://github.com/InCar/ali-mns and changed with another name (ali-mns-plus)
-in order to publish successfully by myself
+in order to successfully publish an artifact without any CVE problems by myself
 
 NOTE: please install node16.18.0:https://nodejs.org/download/release/v16.18.0/ before to execute "npm install"
 
@@ -938,7 +937,9 @@ Use `npm run test` to execute the test.
 
 Set environment variable **DEBUG** to **ali-mns.test** to turn on output trace(will slow down the test).
 
-# Privacy Policy
+# Privacy Policy (totally removed in ali-mns-plus)
+Note: This is totally removed in ali-mns-plus
+
 We collect information about how you use the `ali-mns` packages for better service.
 
 By default a tracing information is sent to google analytics when sending a request to ali-mns service,

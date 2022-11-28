@@ -1,8 +1,8 @@
 # ali-mns (ali-mqs)
 [![npm version](https://badge.fury.io/js/ali-mns.svg)](http://badge.fury.io/js/ali-mns)
-[![npm version](https://badge.fury.io/js/ali-mqs.svg)](http://badge.fury.io/js/ali-mqs)
 
-这是从https://github.com/shxiaojunsh/ali-mns演进而来，并且为了能成功在npmjs发布因此更改了名字(ali-mns-plus)
+
+这是从https://github.com/shxiaojunsh/ali-mns演进而来，并且为了能成功在npmjs发布一个没有任何安全漏洞的包因此更改了名字(ali-mns-plus)
 
 注意: 建议安装node16.18.0(https://nodejs.org/download/release/v16.18.0/)以便成功执行npm install
 
@@ -928,7 +928,9 @@ var account = new AliMNS.Account("1786090012649663", "<your-key-id>", "<your-key
 
 设置环境变量 **DEBUG** 为 **ali-mns.test** 开启测试输出(会略微拖慢测试).
 
-# Privacy Policy
+# Privacy Policy (totally removed in ali-mns-plus)
+注意，在ali-mns-plus中，已经将此移除，不再包含该功能
+
 私隐策略
 我们收集你一些如何使用`ali-mns`的数据来提供更好的服务.
 
